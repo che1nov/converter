@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Currency Converter API
+  version: 1.0.0
+  description: API for converting currencies and retrieving transaction history.
+
+paths:
+  /convert:
+    post:
+      summary: Convert currency
+      operationId: convertCurrency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConversionRequest"
+      responses:
+        "200":
+          description: Successful conversion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConversionResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Invalid input
+        "500":
+          description: Internal server error
+
+  /history:
+    get:
+      summary: Retrieve transaction history
+      operationId: getHistory
+      responses:
+        "200":
+          description: Transaction history retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/History"
+        "500":
+          description: Internal server error
+
+components:
+  schemas:
+    ConversionRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount to convert
+          example: 100
+        from:
+          type: string
+          description: The source currency code (e.g., USD)
+          example: USD
+        to:
+          type: string
+          description: The target currency code (e.g., EUR)
+          example: EUR
+      required:
+        - amount
+        - from
+        - to
+
+    ConversionResult:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The original amount
+          example: 100.0
+        from:
+          type: string
+          description: The source currency code (e.g., USD)
+          example: USD
+        to:
+          type: string
+          description: The target currency code (e.g., EUR)
+          example: EUR
+        result:
+          type: number
+          format: float
+          description: The converted amount
+          example: 85.0
+      required:
+        - amount
+        - from
+        - to
+        - result
+
+    History:
+      type: object
+      properties:
+        history:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConversionResult"
+          description: A list of past conversion transactions
