@@ -5,16 +5,33 @@ info:
   description: API for converting currencies and retrieving transaction history.
 
 paths:
-  /convert:
-    post:
+  /currencies/{from}/{to}/convertion:
+    get:
       summary: Convert currency
       operationId: convertCurrency
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ConversionRequest"
+      parameters:
+        - name: from
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The source currency code (e.g., USD)
+          example: USD
+        - name: to
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The target currency code (e.g., EUR)
+          example: EUR
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+          description: The amount to convert
+          example: 100
       responses:
         "200":
           description: Successful conversion
@@ -52,27 +69,6 @@ paths:
 
 components:
   schemas:
-    ConversionRequest:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: float
-          description: The amount to convert
-          example: 100
-        from:
-          type: string
-          description: The source currency code (e.g., USD)
-          example: USD
-        to:
-          type: string
-          description: The target currency code (e.g., EUR)
-          example: EUR
-      required:
-        - amount
-        - from
-        - to
-
     ConversionResult:
       type: object
       properties:
