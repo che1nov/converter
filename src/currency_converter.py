@@ -1,3 +1,5 @@
+
+
 class CurrencyConverter:
     def __init__(self, csv_file="data/exchange_rates.csv"):
         self.rates = {}
