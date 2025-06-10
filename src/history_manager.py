@@ -3,14 +3,23 @@ import os
 
 
 class HistoryManager:
-    def __init__(self, file_path="data/operations.json"):
+    def __init__(self, file_path=None):
+        if file_path is None:
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            file_path = os.path.join(project_root, "data", "operations.json")
         self.file_path = file_path
         self.operations = self.load_operations()
 
     def load_operations(self):
         if os.path.exists(self.file_path):
-            with open(self.file_path, "r") as file:
-                return json.load(file)
+            try:
+                with open(self.file_path, "r") as file:
+                    return json.load(file)
+            except json.JSONDecodeError:
+                print("⚠️ Corrupted history file. Resetting...")
+                return []
+        with open(self.file_path, "w") as file:
+            json.dump([], file)
         return []
 
     def save_operations(self):

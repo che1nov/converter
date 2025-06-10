@@ -3,24 +3,18 @@
         "amount": 100.0,
         "from": "USD",
         "to": "EUR",
-        "converted": 92.0
+        "converted": 90.0
     },
     {
-        "amount": 100.0,
-        "from": "EUR",
-        "to": "USD",
-        "converted": 108.69565217391303
-    },
-    {
-        "amount": 100.0,
-        "from": "AUD",
-        "to": "EUR",
-        "converted": 69.23076923076923
-    },
-    {
-        "amount": 100.0,
+        "amount": 200.0,
         "from": "USD",
         "to": "EUR",
-        "converted": 90.0
+        "converted": 180.0
+    },
+    {
+        "amount": 123.0,
+        "from": "USD",
+        "to": "EUR",
+        "converted": 110.7
     }
 ]
