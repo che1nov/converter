@@ -1,0 +1,28 @@
+version: '3'
+
+tasks:
+  init:
+    desc: "Установка зависимостей"
+    cmds:
+      - pip install flake8 coverage
+
+  test:
+    desc: "Запуск всех тестов"
+    deps: [init]
+    cmds:
+      - PYTHONPATH=src python3 -m unittest discover tests
+
+  server:
+    desc: "Запуск HTTP-сервера"
+    cmds:
+      - cd src && PYTHONPATH=src python3 main.py
+
+  lint:
+    desc: "Проверка кода через flake8"
+    deps: [init]
+    cmds:
+      - flake8 src/ tests/
+
+  all:
+    desc: "Выполнить всё: lint + test"
+    deps: [lint, test]
