@@ -1,3 +1,6 @@
+import os
+
+
 class CurrencyConverter:
     def __init__(self, csv_file=None):
         if csv_file is None:
