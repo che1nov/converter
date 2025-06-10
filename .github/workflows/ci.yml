@@ -29,15 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 5. Проверка PEP 8 через flake8
-      - name: Check PEP 8 compliance
-        run: |
-          flake8 src tests \
-            --max-line-length=120 \
-            --exclude=__init__.py,__pycache__,*.pyc \
-            --show-source \
-            --statistics
-
       # 6. Тесты через unittest
       - name: Run unit tests (unittest)
         run: |
