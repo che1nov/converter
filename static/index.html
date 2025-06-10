@@ -187,7 +187,7 @@
       .then(res => res.json())
       .then(history => {
         const tbody = document.querySelector("#historyTable tbody");
-        tbody.innerHTML = ""; // Очищаем текущие строки
+        tbody.innerHTML = "";
 
         history.forEach(op => {
           const row = document.createElement("tr");
@@ -197,7 +197,7 @@
             <td>${op.to}</td>
             <td>${op.converted}</td>
           `;
-          tbody.insertBefore(row, tbody.firstChild); // <-- Вставка сверху
+          tbody.insertBefore(row, tbody.firstChild); 
         });
       });
   }
@@ -205,7 +205,7 @@
   window.onload = () => {
     populateSelects();
     updateHistory();
-    setInterval(updateHistory, 5000); // автообновление каждые 5 секунд
+    setInterval(updateHistory, 5000);
   };
 </script>
 

@@ -1,11 +1,8 @@
-# src/http_server.py
-
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import json
 import os
 
-# Импорты из src/
 from currency_converter import CurrencyConverter
 from history_manager import HistoryManager
 
