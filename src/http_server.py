@@ -3,7 +3,6 @@ from urllib.parse import urlparse, parse_qs
 import json
 import os
 
-# Импорты из src/
 from currency_converter import CurrencyConverter
 from history_manager import HistoryManager
 
@@ -22,7 +21,6 @@ class SimpleServer(BaseHTTPRequestHandler):
         path = parsed_url.path
 
         try:
-            # --- API: Конвертация ---
             if path == '/convert':
                 query = parse_qs(parsed_url.query)
                 amount = float(query.get('amount', [None])[0])
@@ -41,18 +39,13 @@ class SimpleServer(BaseHTTPRequestHandler):
                 self._set_headers("application/json")
                 self.wfile.write(json.dumps(operation).encode())
 
-            # --- API: История ---
             elif path == '/history':
                 self._set_headers("application/json")
-                self.wfile.write(
-                    json.dumps(
-                        self.history.get_operations()).encode())
+                self.wfile.write(json.dumps(self.history.get_operations()).encode())
 
-            # --- Статика: главная страница ---
             elif path == '/' or path == '/index.html':
                 self._set_headers("text/html")
 
-                # Получаем абсолютный путь до static/index.html
                 current_dir = os.path.dirname(os.path.abspath(__file__))
                 project_root = os.path.dirname(current_dir)
                 file_path = os.path.join(project_root, "static", "index.html")
@@ -67,12 +60,10 @@ class SimpleServer(BaseHTTPRequestHandler):
                     self._set_headers(500)
                     self.wfile.write(b"Error: index.html not found")
 
-            # --- Favicon ---
             elif path == '/favicon.ico':
                 self._set_headers("image/x-icon")
                 self.wfile.write(b'')
 
-            # --- 404 ---
             else:
                 self._set_headers(404)
                 self.wfile.write(b"404 Not Found")

@@ -23,13 +23,6 @@ tasks:
     cmds:
       - flake8 src/ tests/
 
-  coverage:
-    desc: "Покрытие тестов"
-    deps: [init]
-    cmds:
-      - coverage run -m unittest discover tests
-      - coverage report -m
-
   all:
-    desc: "Выполнить всё: lint + coverage + test"
-    deps: [lint, coverage, test]
+    desc: "Выполнить всё: lint + test"
+    deps: [lint, test]
