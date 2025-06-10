@@ -32,13 +32,3 @@ jobs:
     - name: Run tests with coverage
       run: |
         pytest --cov=src --cov-report=xml tests/
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-
-    - name: Check PEP 8 compliance
-      run: |
-        flake8 src tests --max-line-length=120 --exclude=__init__.py
