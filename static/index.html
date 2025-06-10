@@ -5,25 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Currency Converter</title>
   <style>
+    /* Стили */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f8;
       margin: 0;
       padding: 2rem;
+      min-height: 100vh;
+      background: #f4f6f8;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: start;
     }
 
     h1 {
       color: #333;
+      margin-bottom: 2rem;
     }
 
     .converter {
       background: white;
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       max-width: 500px;
       width: 100%;
     }
@@ -81,6 +89,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 1rem;
     }
 
     th, td {
@@ -134,7 +143,6 @@
 <script>
   const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD'];
 
-  // Заполнить селекты
   function populateSelects() {
     const fromSelect = document.getElementById("from");
     const toSelect = document.getElementById("to");
@@ -179,7 +187,7 @@
       .then(res => res.json())
       .then(history => {
         const tbody = document.querySelector("#historyTable tbody");
-        tbody.innerHTML = "";
+        tbody.innerHTML = ""; // Очищаем текущие строки
 
         history.forEach(op => {
           const row = document.createElement("tr");
@@ -189,12 +197,11 @@
             <td>${op.to}</td>
             <td>${op.converted}</td>
           `;
-          tbody.appendChild(row);
+          tbody.insertBefore(row, tbody.firstChild); // <-- Вставка сверху
         });
       });
   }
 
-  // Инициализация
   window.onload = () => {
     populateSelects();
     updateHistory();
