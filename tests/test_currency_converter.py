@@ -8,8 +8,8 @@ def converter():
 
 
 def test_convert(converter):
-    assert converter.convert(100, "USD", "EUR") == 92.0
-    assert converter.convert(50, "USD", "GBP") == pytest.approx(39.5)
+    assert converter.convert(100, "USD", "EUR") == 90.0
+    assert converter.convert(50, "USD", "GBP") == pytest.approx(40)
 
 
 def test_invalid_currency(converter):

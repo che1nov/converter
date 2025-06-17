@@ -4,12 +4,14 @@ import os
 class CurrencyConverter:
     def __init__(self, csv_file=None):
         if csv_file is None:
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            project_root = os.path.dirname(
+                os.path.dirname(os.path.abspath(__file__))
+            )
             csv_file = os.path.join(project_root, "data", "exchange_rates.csv")
 
         self.rates = {}
         with open(csv_file, "r") as file:
-            next(file) 
+            next(file)
             for line in file:
                 currency, rate = line.strip().split(",")
                 self.rates[currency] = float(rate)

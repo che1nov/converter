@@ -1,213 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Currency Converter</title>
-  <style>
-    /* Стили */
-    * {
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Converter</title>
+    <style>
+      /* Стили */
+      * {
+        box-sizing: border-box;
+      }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 2rem;
-      min-height: 100vh;
-      background: #f4f6f8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-    }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 2rem;
+        min-height: 100vh;
+        background: #f4f6f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+      }
 
-    h1 {
-      color: #333;
-      margin-bottom: 2rem;
-    }
+      h1 {
+        color: #333;
+        margin-bottom: 2rem;
+      }
 
-    .converter {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      max-width: 500px;
-      width: 100%;
-    }
+      .converter {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 100%;
+      }
 
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: bold;
-    }
+      label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
 
-    input, select {
-      width: 100%;
-      padding: 0.75rem;
-      margin-top: 0.25rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
+      input,
+      select {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 0.25rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
 
-    button {
-      margin-top: 1.5rem;
-      padding: 0.75rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      width: 100%;
-    }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.75rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+      }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+      button:hover {
+        background-color: #0056b3;
+      }
 
-    .result {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background-color: #e9f7ef;
-      border-left: 5px solid #28a745;
-      font-size: 1.2rem;
-      color: #155724;
-    }
+      .result {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background-color: #e9f7ef;
+        border-left: 5px solid #28a745;
+        font-size: 1.2rem;
+        color: #155724;
+      }
 
-    .history {
-      margin-top: 2rem;
-      width: 100%;
-      max-width: 500px;
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+      .history {
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
 
-    th, td {
-      text-align: left;
-      padding: 0.5rem;
-      border-bottom: 1px solid #ddd;
-    }
+      th,
+      td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
 
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
-</head>
-<body>
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>💱 Currency Converter</h1>
 
-<h1>💱 Currency Converter</h1>
+    <div class="converter">
+      <label for="amount"
+        >Amount:
+        <input type="number" id="amount" value="100" step="any" />
+      </label>
 
-<div class="converter">
-  <label for="amount">Amount:
-    <input type="number" id="amount" value="100" step="any" />
-  </label>
+      <label for="from"
+        >From:
+        <select id="from"></select>
+      </label>
 
-  <label for="from">From:
-    <select id="from"></select>
-  </label>
+      <label for="to"
+        >To:
+        <select id="to"></select>
+      </label>
 
-  <label for="to">To:
-    <select id="to"></select>
-  </label>
+      <button onclick="convert()">Convert</button>
 
-  <button onclick="convert()">Convert</button>
+      <div class="result" id="result"></div>
+    </div>
 
-  <div class="result" id="result"></div>
-</div>
+    <div class="history">
+      <h2>🕒 Conversion History</h2>
+      <table id="historyTable">
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
-<div class="history">
-  <h2>🕒 Conversion History</h2>
-  <table id="historyTable">
-    <thead>
-      <tr>
-        <th>Amount</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Result</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+    <script>
+      const currencies = [
+        "USD",
+        "EUR",
+        "RUB",
+        "GBP",
+        "JPY",
+        "AUD",
+        "CAD",
+        "CHF",
+        "CNY",
+        "SEK",
+        "NZD",
+      ];
 
-<script>
-  const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD'];
+      function populateSelects() {
+        const fromSelect = document.getElementById("from");
+        const toSelect = document.getElementById("to");
 
-  function populateSelects() {
-    const fromSelect = document.getElementById("from");
-    const toSelect = document.getElementById("to");
+        currencies.forEach((curr) => {
+          const optionFrom = document.createElement("option");
+          optionFrom.value = curr;
+          optionFrom.text = curr;
+          fromSelect.appendChild(optionFrom);
 
-    currencies.forEach(curr => {
-      const optionFrom = document.createElement("option");
-      optionFrom.value = curr;
-      optionFrom.text = curr;
-      fromSelect.appendChild(optionFrom);
+          const optionTo = document.createElement("option");
+          optionTo.value = curr;
+          optionTo.text = curr;
+          toSelect.appendChild(optionTo);
+        });
 
-      const optionTo = document.createElement("option");
-      optionTo.value = curr;
-      optionTo.text = curr;
-      toSelect.appendChild(optionTo);
-    });
+        fromSelect.value = "USD";
+        toSelect.value = "EUR";
+      }
 
-    fromSelect.value = "USD";
-    toSelect.value = "EUR";
-  }
+      function convert() {
+        const amount = document.getElementById("amount").value;
+        const from = document.getElementById("from").value;
+        const to = document.getElementById("to").value;
 
-  function convert() {
-    const amount = document.getElementById("amount").value;
-    const from = document.getElementById("from").value;
-    const to = document.getElementById("to").value;
+        fetch(`/convert?amount=${amount}&from=${from}&to=${to}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              document.getElementById(
+                "result"
+              ).innerHTML = `<div style="color:red">${data.error}</div>`;
+            } else {
+              document.getElementById(
+                "result"
+              ).innerHTML = `<strong>${data.amount} ${data.from} = ${data.converted} ${data.to}</strong>`;
+              updateHistory();
+            }
+          });
+      }
 
-    fetch(`/convert?amount=${amount}&from=${from}&to=${to}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          document.getElementById("result").innerHTML =
-            `<div style="color:red">${data.error}</div>`;
-        } else {
-          document.getElementById("result").innerHTML =
-            `<strong>${data.amount} ${data.from} = ${data.converted} ${data.to}</strong>`;
-          updateHistory();
-        }
-      });
-  }
+      function updateHistory() {
+        fetch("/history")
+          .then((res) => res.json())
+          .then((history) => {
+            const tbody = document.querySelector("#historyTable tbody");
+            tbody.innerHTML = "";
 
-  function updateHistory() {
-    fetch('/history')
-      .then(res => res.json())
-      .then(history => {
-        const tbody = document.querySelector("#historyTable tbody");
-        tbody.innerHTML = "";
-
-        history.forEach(op => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
+            history.forEach((op) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
             <td>${op.amount}</td>
             <td>${op.from}</td>
             <td>${op.to}</td>
             <td>${op.converted}</td>
           `;
-          tbody.insertBefore(row, tbody.firstChild); 
-        });
-      });
-  }
+              tbody.insertBefore(row, tbody.firstChild);
+            });
+          });
+      }
 
-  window.onload = () => {
-    populateSelects();
-    updateHistory();
-    setInterval(updateHistory, 5000);
-  };
-</script>
-
-</body>
+      window.onload = () => {
+        populateSelects();
+        updateHistory();
+        setInterval(updateHistory, 5000);
+      };
+    </script>
+  </body>
 </html>

@@ -13,7 +13,7 @@ class SimpleServer(BaseHTTPRequestHandler):
 
     def _set_headers(self, content_type="text/html", status=200):
         self.send_response(status)
-        self.send_header('Content-type', content_type)
+        self.send_header("Content-type", content_type)
         self.end_headers()
 
     def do_GET(self):
@@ -21,29 +21,31 @@ class SimpleServer(BaseHTTPRequestHandler):
         path = parsed_url.path
 
         try:
-            if path == '/convert':
+            if path == "/convert":
                 query = parse_qs(parsed_url.query)
-                amount = float(query.get('amount', [None])[0])
-                from_curr = query.get('from', [None])[0].upper()
-                to_curr = query.get('to', [None])[0].upper()
+                amount = float(query.get("amount", [None])[0])
+                from_curr = query.get("from", [None])[0].upper()
+                to_curr = query.get("to", [None])[0].upper()
 
                 result = self.converter.convert(amount, from_curr, to_curr)
                 operation = {
                     "amount": amount,
                     "from": from_curr,
                     "to": to_curr,
-                    "converted": result
+                    "converted": result,
                 }
                 self.history.add_operation(operation)
 
                 self._set_headers("application/json")
                 self.wfile.write(json.dumps(operation).encode())
 
-            elif path == '/history':
+            elif path == "/history":
                 self._set_headers("application/json")
-                self.wfile.write(json.dumps(self.history.get_operations()).encode())
+                self.wfile.write(
+                    json.dumps(self.history.get_operations()).encode()
+                )
 
-            elif path == '/' or path == '/index.html':
+            elif path == "/" or path == "/index.html":
                 self._set_headers("text/html")
 
                 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -53,9 +55,9 @@ class SimpleServer(BaseHTTPRequestHandler):
                 with open(file_path, "rb") as f:
                     self.wfile.write(f.read())
 
-            elif path == '/favicon.ico':
+            elif path == "/favicon.ico":
                 self._set_headers("image/x-icon")
-                self.wfile.write(b'')
+                self.wfile.write(b"")
 
             else:
                 self._set_headers(404)
@@ -68,7 +70,7 @@ class SimpleServer(BaseHTTPRequestHandler):
 
 
 def run(port=8008):
-    server_address = ('', port)
+    server_address = ("", port)
     httpd = HTTPServer(server_address, SimpleServer)
     print("Starting server on port 8008...")
     httpd.serve_forever()

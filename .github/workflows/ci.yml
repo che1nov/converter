@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' 
+          python-version: "3.10"
 
       # 3. Установка зависимостей
       - name: Install dependencies
@@ -29,7 +29,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 6. Тесты через unittest
-      - name: Run unit tests (unittest)
+      # 4. Запуск линтера
+      - name: Run linter
         run: |
-          PYTHONPATH=src python -m unittest discover tests
+          flake8 .
+
+      # 5. Тесты через pytest
+      - name: Run tests
+        run: |
+          PYTHONPATH=src pytest tests
