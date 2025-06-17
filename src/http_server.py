@@ -35,6 +35,7 @@ class SimpleServer(BaseHTTPRequestHandler):
                     "converted": result,
                 }
                 self.history.add_operation(operation)
+                del operation["_id"]
 
                 self._set_headers("application/json")
                 self.wfile.write(json.dumps(operation).encode())

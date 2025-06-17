@@ -1,37 +1,31 @@
-import json
 import os
+from pymongo import MongoClient
+from pymongo.collection import Collection
+from dotenv import load_dotenv
 
 
 class HistoryManager:
-    def __init__(self, file_path=None):
-        if file_path is None:
-            project_root = os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__))
+    def __init__(
+        self,
+        mongo_client=None,
+        db_name="currency_converter",
+        collection_name="history",
+    ):
+        load_dotenv()
+        if mongo_client is None:
+            mongo_uri = os.environ.get(
+                "MONGODB_URI", "mongodb://localhost:27017/"
             )
-            file_path = os.path.join(project_root, "data", "operations.json")
-        self.file_path = file_path
-        self.operations = self.load_operations()
+            self.client = MongoClient(mongo_uri)
+        else:
+            self.client = mongo_client
 
-    def load_operations(self):
-        if os.path.exists(self.file_path):
-            try:
-                with open(self.file_path, "r") as file:
-                    return json.load(file)
-            except json.JSONDecodeError:
-                print("⚠️ Corrupted history file. Resetting...")
-                return []
-        with open(self.file_path, "w") as file:
-            json.dump([], file)
-        return []
-
-    def save_operations(self):
-        with open(self.file_path, "w") as file:
-            json.dump(self.operations, file, indent=4)
+        self.db = self.client[db_name]
+        self.collection: Collection = self.db[collection_name]
 
     def add_operation(self, operation):
-        if operation not in self.operations:
-            self.operations.append(operation)
-        self.save_operations()
+        self.collection.insert_one(operation)
 
     def get_operations(self):
-        return self.operations
+        operations = list(self.collection.find({}, {"_id": 0}))
+        return operations

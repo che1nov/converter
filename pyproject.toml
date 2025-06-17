@@ -5,6 +5,8 @@ exclude = '''
 /(
     \.git
   | \.idea
+  | \.env
+  | \.venv
   | \.vscode
   | \.pytest_cache
   | docs

@@ -9,7 +9,7 @@ tasks:
   test:
     desc: "Запуск всех тестов"
     cmds:
-      - PYTHONPATH=src pytest tests
+      - PYTHONPATH=src pytest -vv tests
 
   server:
     desc: "Запуск HTTP-сервера"
