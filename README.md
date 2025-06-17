@@ -25,13 +25,19 @@
     pip install -r requirements.txt
     ```
 
-3.  **Запуск MongoDB**: Запустите контейнер MongoDB с помощью Docker Compose:
+3.  **Создание файла .env**: Скопируйте содержимое файла `.env.example` в новый файл с именем `.env`.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4.  **Запуск MongoDB**: Запустите контейнер MongoDB с помощью Docker Compose:
 
     ```bash
     docker compose up -d
     ```
 
-4.  **Запуск сервера**: Запустите HTTP-сервер приложения:
+5.  **Запуск сервера**: Запустите HTTP-сервер приложения:
     ```bash
     python src/main.py
     ```
