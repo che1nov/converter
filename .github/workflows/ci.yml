@@ -18,7 +18,7 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongo --eval 'db.runCommand({ping: 1})'"
+          --health-cmd "timeout 5 bash -c 'cat < /dev/null > /dev/tcp/localhost/27017 || exit 1'"
           --health-interval 10s
           --health-timeout 15s
           --health-retries 10
