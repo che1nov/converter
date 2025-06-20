@@ -12,6 +12,26 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     restart: always
+    networks:
+      - converter_network
+
+  converter_app:
+    build: .
+    container_name: converter_app
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8008:8008"
+    depends_on:
+      mongodb:
+        condition: service_started
+    env_file:
+      - .env
+    networks:
+      - converter_network
 
 volumes:
   mongodb_data:
+
+networks:
+  converter_network:
